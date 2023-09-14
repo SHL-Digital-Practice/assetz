@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
   const commitObjectId = commit.objectId;
 
   // Get assets from commit
+  GqlTest();
 
   // Update assets database
   return {
