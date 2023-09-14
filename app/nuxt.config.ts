@@ -4,4 +4,8 @@ export default defineNuxtConfig({
   nitro: {
     preset: "netlify",
   },
+  sourcemap: {
+    server: true,
+    client: true,
+  },
 });

@@ -1,6 +1,17 @@
-export default defineEventHandler((event) => {
-  console.log(JSON.stringify(event));
+export default defineEventHandler(async (event) => {
+  const { payload } = await readBody(event);
+  // Parse webhook payload
+  if (payload.event.event_name !== "commit_create")
+    return { message: "skipped" };
+
+  // Get commit from payload
+  const commit = payload.event.data.commit;
+  const commitObjectId = commit.objectId;
+
+  // Get assets from commit
+
+  // Update assets database
   return {
-    hello: "world",
+    message: "success",
   };
 });
