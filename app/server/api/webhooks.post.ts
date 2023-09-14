@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
     name: string;
     cost?: number | null;
     category: string;
+    projectId: string;
   }
 
   const assets =
@@ -41,7 +42,12 @@ export default defineEventHandler(async (event) => {
       let assetName: string =
         familyName === typeName ? familyName : familyName + ":" + typeName;
 
-      const asset: Asset = { id, name: assetName, category };
+      const asset: Asset = {
+        id,
+        name: assetName,
+        category,
+        projectId: streamId,
+      };
 
       return asset;
     }) || [];
