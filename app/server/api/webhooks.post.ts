@@ -6,13 +6,14 @@ export default defineEventHandler(async (event) => {
 
   // Get commit from payload
   const commit = payload.event.data.commit;
-  const objectId = commit.objectId;
-  const streamId = commit.streamId;
+  const { objectId, projectId, versionId, modelId } = commit;
+
+  console.log(JSON.stringify(commit));
 
   // Get assets from commit
   const data = await GqlGetFurnitures({
     objectId,
-    streamId,
+    streamId: modelId,
     myQuery: [
       {
         field: "speckle_type",
@@ -29,6 +30,8 @@ export default defineEventHandler(async (event) => {
     name: string;
     cost?: number | null;
     category: string;
+    versionId: string;
+    modelId: string;
     projectId: string;
   }
 
@@ -46,7 +49,9 @@ export default defineEventHandler(async (event) => {
         id,
         name: assetName,
         category,
-        projectId: streamId,
+        projectId,
+        modelId,
+        versionId,
       };
 
       return asset;
