@@ -23,14 +23,6 @@ export default defineEventHandler(async (event) => {
     ],
   });
 
-  console.log(data.stream?.object?.children.objects.length);
-  data.stream?.object?.children.objects.forEach((obj) => {
-    const typeId = console.log("Type ID", obj?.data["id"]);
-    const familyName = console.log("Family", obj?.data["family"]);
-    const typeName = console.log("Type", obj?.data["type"]);
-    const category = console.log("Category", obj?.data["category"]);
-  });
-
   // Create assets in database
   interface Asset {
     id: string;
