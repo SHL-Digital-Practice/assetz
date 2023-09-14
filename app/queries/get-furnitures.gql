@@ -1,22 +1,18 @@
-# query GetFurnitures(
-#   $myQuery: [JSONObject!]
-#   $streamId: String!
-#   $objectId: String!
-# ) {
-#   stream(id: $streamId) {
-#     object(id: $objectId) {
-#       children(query: $myQuery) {
-#         totalCount
-#         objects {
-#           id
-#           speckleType
-#           data
-#         }
-#       }
-#     }
-#   }
-# }
-
-query Test {
-  testNumber
+query GetFurnitures(
+  $myQuery: [JSONObject!]
+  $streamId: String!
+  $objectId: String!
+) {
+  stream(id: $streamId) {
+    object(id: $objectId) {
+      children(query: $myQuery) {
+        totalCount
+        objects {
+          id
+          speckleType
+          data
+        }
+      }
+    }
+  }
 }
