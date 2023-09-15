@@ -8,8 +8,8 @@
 import { DefaultViewerParams, Viewer } from "@speckle/viewer";
 
 const props = defineProps<{
-  speckle_id: string;
-  project_id: string;
+  speckle_id: string; // Object Id
+  project_id: string; // Stream Id
 }>();
 
 const container = ref<HTMLCanvasElement | null>(null);
