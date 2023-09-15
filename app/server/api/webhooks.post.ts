@@ -1,3 +1,4 @@
+import { serverSupabaseClient } from "#supabase/server";
 import { Database } from "~/types/database.types";
 
 export default defineEventHandler(async (event) => {
@@ -8,12 +9,12 @@ export default defineEventHandler(async (event) => {
 
   // Get commit from payload
   const commit = payload.event.data.commit;
-  const { objectId, projectId, versionId, modelId } = commit;
+  const { objectId, projectId, versionId, modelId, streamId } = commit;
 
   // Get assets from commit
   const data = await GqlGetRevitTypes({
     objectId,
-    streamId: modelId,
+    streamId,
   });
 
   // Create assets in database
@@ -40,8 +41,11 @@ export default defineEventHandler(async (event) => {
       };
     }) || [];
 
-  const db = useSupabaseClient<Database>();
+  const db = await serverSupabaseClient<Database>(event);
+
   const result = await db.from("assets").insert(assets);
+
+  console.log(result);
 
   const queryTotalCount = data.stream?.object?.children.totalCount;
   const assetsCount = assets?.length;
