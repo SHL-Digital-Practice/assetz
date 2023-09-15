@@ -11,10 +11,12 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/supabase": "^1.1.0",
+    "@nuxtjs/tailwindcss": "^6.8.0",
     "nuxt": "^3.7.3",
     "nuxt-graphql-client": "^0.2.30"
   },
   "dependencies": {
+    "@speckle/viewer": "^2.15.1",
     "supabase": "^1.93.0"
   }
 }

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["nuxt-graphql-client", "@nuxtjs/supabase"],
+  modules: ["nuxt-graphql-client", "@nuxtjs/supabase", "@nuxtjs/tailwindcss"],
   nitro: {
     preset: "netlify",
   },
@@ -16,5 +16,8 @@ export default defineNuxtConfig({
   },
   typescript: {
     shim: false,
+  },
+  supabase: {
+    redirect: false,
   },
 });
