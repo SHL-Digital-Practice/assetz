@@ -10,20 +10,10 @@ export default defineEventHandler(async (event) => {
   const commit = payload.event.data.commit;
   const { objectId, projectId, versionId, modelId } = commit;
 
-  console.log(JSON.stringify(commit));
-
   // Get assets from commit
-  const data = await GqlGetFurnitures({
+  const data = await GqlGetRevitTypes({
     objectId,
     streamId: modelId,
-    myQuery: [
-      {
-        field: "speckle_type",
-        value:
-          "Objects.BuiltElements.Revit.RevitElementType:Objects.BuiltElements.Revit.RevitSymbolElementType",
-        operator: "=",
-      },
-    ],
   });
 
   // Create assets in database
