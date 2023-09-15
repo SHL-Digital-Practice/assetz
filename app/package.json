@@ -10,7 +10,11 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxtjs/supabase": "^1.1.0",
     "nuxt": "^3.7.3",
     "nuxt-graphql-client": "^0.2.30"
+  },
+  "dependencies": {
+    "supabase": "^1.93.0"
   }
 }

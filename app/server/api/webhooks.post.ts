@@ -1,3 +1,5 @@
+import { Database } from "~/types/database.types";
+
 export default defineEventHandler(async (event) => {
   const { payload } = await readBody(event);
   // Parse webhook payload
@@ -25,18 +27,11 @@ export default defineEventHandler(async (event) => {
   });
 
   // Create assets in database
-  interface Asset {
-    id: string;
-    name: string;
-    cost?: number | null;
-    category: string;
-    versionId: string;
-    modelId: string;
-    projectId: string;
-  }
 
   const assets =
-    data.stream?.object?.children.objects.map<Asset>((obj) => {
+    data.stream?.object?.children.objects.map<
+      Database["public"]["Tables"]["assets"]["Insert"]
+    >((obj) => {
       const id = obj?.data["id"];
       const familyName = obj?.data["family"];
       const typeName = obj?.data["type"];
@@ -45,17 +40,18 @@ export default defineEventHandler(async (event) => {
       let assetName: string =
         familyName === typeName ? familyName : familyName + ":" + typeName;
 
-      const asset: Asset = {
-        id,
+      return {
+        model_id: modelId,
+        project_id: projectId,
+        version_id: versionId,
+        speckle_id: id,
         name: assetName,
-        category,
-        projectId,
-        modelId,
-        versionId,
+        category: category,
       };
-
-      return asset;
     }) || [];
+
+  const db = useSupabaseClient<Database>();
+  const result = await db.from("assets").insert(assets);
 
   const queryTotalCount = data.stream?.object?.children.totalCount;
   const assetsCount = assets?.length;
