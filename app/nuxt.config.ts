@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  experimental: {
+    viewTransition: true,
+  },
   modules: ["nuxt-graphql-client", "@nuxtjs/supabase", "@nuxtjs/tailwindcss"],
   nitro: {
     preset: "netlify",

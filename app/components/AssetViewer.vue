@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-full">
-    <canvas ref="container" class="w-full h-full"></canvas>
+  <div class="flex h-full" ref="container">
+    <!-- <canvas class="w-full h-full bg-red-300"></canvas> -->
   </div>
 </template>
 
@@ -21,16 +21,20 @@ onMounted(async () => {
     );
     const viewer = new Viewer(container.value, DefaultViewerParams);
     await viewer.init();
-    console.log("viewer initialized");
+
     await viewer.loadObject(
       `https://speckle.xyz/streams/${props.project_id}/objects/${props.speckle_id}`,
       undefined,
       undefined,
       true
     );
-    console.log("object loaded");
   }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.active {
+  view-transition-name: selected-film;
+  contain: layout;
+}
+</style>
