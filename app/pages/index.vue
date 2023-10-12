@@ -13,9 +13,8 @@
             :to="`/asset/${asset.id}`"
             @click.native="active = asset.id"
           >
-            <AssetViewer
+            <AssetCard
               :class="{ active: active === asset.id }"
-              v-if="assets && asset"
               :project_id="asset.project_id!"
               :speckle_id="asset.speckle_id!"
             />
@@ -28,17 +27,14 @@
 
 <script setup lang="ts">
 import { Database } from "~/types/database.types";
-await new Promise((resolve) => setTimeout(resolve, 10));
 
 const db = useSupabaseClient<Database>();
-
 const active = useState();
+
 const { data: assets, pending } = useAsyncData("assets", async () => {
   const { data, error } = await db.from("assets").select().limit(6);
-
   return data;
 });
-// https://stackblitz.com/edit/nuxt-view-transitions?file=components%2FImageGallery.vue
 </script>
 <style scoped>
 h1 {
