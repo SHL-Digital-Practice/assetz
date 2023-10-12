@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-full">
-    <img :src="thumbnail" class="object-cover" />
+  <div class="transition cursor-pointer flex h-full">
+    <img :src="thumbnail" class="object-contain" />
   </div>
 </template>
 
@@ -10,14 +10,9 @@ const props = defineProps<{
   project_id: string; // Stream Id
 }>();
 
-const thumbnail = ref<string>(
-  `https://speckle.xyz/preview/${props.project_id}/objects/${props.speckle_id}`
+const thumbnail = computed(
+  () =>
+    `https://speckle.xyz/preview/${props.project_id}/objects/${props.speckle_id}`
 );
 </script>
-
-<style scoped>
-.active {
-  view-transition-name: selected-film;
-  contain: layout;
-}
-</style>
+<style scoped></style>
