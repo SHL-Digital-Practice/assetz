@@ -36,7 +36,7 @@ const page = usePage();
 
 function paginate(direction: number) {
   page.value += direction;
-  emit("paginate", page.value);
+  emit("paginate");
 }
 </script>
 
