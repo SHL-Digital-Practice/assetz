@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="absolute text-9xl font-medium text-blue-500 z-30">Assetz</h1>
-    <div class="h-screen bg-blue-800 flex justify-center">
+    <AssetPagination @paginate="refresh">
       <div class="grid grid-cols-3 grid-rows-3 h-full max-w-6xl">
         <template v-for="(asset, i) of assets" :key="asset.id">
           <NuxtLink
@@ -20,18 +20,25 @@
           </NuxtLink>
         </template>
       </div>
-    </div>
+    </AssetPagination>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Database } from "~/types/database.types";
-
 const db = useSupabaseClient<Database>();
-const active = useState<string>();
 
-const { data: assets, pending } = useAsyncData("assets", async () => {
-  const { data, error } = await db.from("assets").select().limit(9);
+const active = useState<string>();
+const page = usePage();
+
+const {
+  data: assets,
+  pending,
+  refresh,
+} = useAsyncData("assets", async () => {
+  const { data, error } = await db
+    .from("assets")
+    .select()
+    .range(page.value * 8, (page.value + 1) * 8);
   return data;
 });
 </script>
