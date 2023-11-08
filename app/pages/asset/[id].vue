@@ -35,8 +35,11 @@ import { Viewer, DefaultViewerParams } from "@speckle/viewer";
 const route = useRoute();
 const db = useSupabaseClient<Database>();
 const container = ref<HTMLCanvasElement | null>(null);
+let viewer: Viewer | null = null;
 
 const { data: asset, pending } = useAsyncData("asset", async () => {
+  console.log("route param id", route.params.id);
+
   const { data, error } = await db
     .from("assets")
     .select()
@@ -45,22 +48,29 @@ const { data: asset, pending } = useAsyncData("asset", async () => {
   return data;
 });
 
-watch(asset, () => {
-  setTimeout(async () => {
-    if (!container.value) return;
+watch(
+  asset,
+  (asset) => {
+    //make sure that we fetch the right asset
+    if (asset?.id != route.params.id) return;
 
-    const viewer = new Viewer(container.value, DefaultViewerParams);
-    viewer.enableMeasurements(true);
+    //timeout just fot the animation
+    setTimeout(async () => {
+      if (!container.value || viewer) return;
 
-    await viewer.init();
-    viewer.loadObject(
-      `https://speckle.xyz/streams/${asset.value.project_id}/objects/${asset.value.speckle_id}`,
-      undefined,
-      undefined,
-      true
-    );
-  }, 300);
-});
+      viewer = new Viewer(container.value, DefaultViewerParams);
+
+      await viewer.init();
+      viewer.loadObject(
+        `https://speckle.xyz/streams/${asset.project_id}/objects/${asset.speckle_id}`,
+        undefined,
+        undefined,
+        true
+      );
+    }, 300);
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>

@@ -2,6 +2,14 @@
   <div>
     <h1 class="absolute text-9xl font-medium text-blue-500 z-30">Assetz</h1>
     <div class="h-screen bg-blue-800 flex justify-center">
+      <div class="h-full flex flex-col items-center justify-center">
+        <Icon
+          @click="paginate(-1)"
+          name="octicon:chevron-up-12"
+          color="white"
+          class="-rotate-90 w-20 h-20 text-white hover:text-blue-200 transition"
+        />
+      </div>
       <div class="grid grid-cols-3 grid-rows-3 h-full max-w-6xl">
         <template v-for="(asset, i) of assets" :key="asset.id">
           <NuxtLink
@@ -20,20 +28,39 @@
           </NuxtLink>
         </template>
       </div>
+      <div class="h-full flex flex-col items-center justify-center">
+        <Icon
+          @click="paginate(1)"
+          name="octicon:chevron-up-12"
+          class="rotate-90 w-20 h-20 text-white hover:text-blue-200 transition"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Database } from "~/types/database.types";
-
 const db = useSupabaseClient<Database>();
-const active = useState<string>();
 
-const { data: assets, pending } = useAsyncData("assets", async () => {
-  const { data, error } = await db.from("assets").select().limit(9);
+const active = useState<string>();
+const activePage = useState<number>("activePage", () => 0);
+
+const {
+  data: assets,
+  pending,
+  refresh,
+} = useAsyncData("assets", async () => {
+  const { data, error } = await db
+    .from("assets")
+    .select()
+    .range(activePage.value * 8, (activePage.value + 1) * 8);
   return data;
 });
+
+function paginate(direction: number) {
+  activePage.value += direction;
+  refresh();
+}
 </script>
 <style scoped>
 h1 {
