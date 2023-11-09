@@ -25,16 +25,13 @@
 </template>
 
 <script setup lang="ts">
-import { Database } from "~/types/database.types";
-
-const db = useSupabaseClient<Database>();
 const active = useState<string>();
 
-const { data: assets, pending } = useAsyncData("assets", async () => {
-  const { data, error } = await db.from("assets").select().limit(9);
-  return data;
-});
+const { data: assets, pending } = await useFetch("/api/assets");
+
+const { data: projects } = await useFetch("/api/projects");
 </script>
+
 <style scoped>
 h1 {
   view-transition-name: header;
