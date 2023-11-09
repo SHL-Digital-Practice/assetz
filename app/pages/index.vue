@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-const db = useSupabaseClient<Database>();
+import { usePage } from "~/composables/states";
 
 const active = useState<string>();
 const page = usePage();
@@ -34,14 +34,9 @@ const {
   data: assets,
   pending,
   refresh,
-} = useAsyncData("assets", async () => {
-  const { data, error } = await db
-    .from("assets")
-    .select()
-    .range(page.value * 8, (page.value + 1) * 8);
-  return data;
-});
+} = await useFetch("/api/assets", { query: { page } });
 </script>
+
 <style scoped>
 h1 {
   view-transition-name: header;
