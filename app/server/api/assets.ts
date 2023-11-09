@@ -1,13 +1,18 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { Database } from "~/types/database.types";
+import type { Database } from "~/types/database.types";
 
 export default defineEventHandler(async (event) => {
   const db = await serverSupabaseClient<Database>(event);
 
+  const query = getQuery(event);
+  const page = query.page ? (query.page as number) : 0;
+
+  console.log(page);
+
   const { data, error, count } = await db
     .from("assets")
     .select("*", { count: "exact" })
-    .limit(9);
+    .range(page * 8, (page + 1) * 8);
 
   return data;
 });
