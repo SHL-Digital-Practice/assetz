@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const page = query.page ? (query.page as number) : 0;
 
-  console.log(page);
-
   const { data, error, count } = await db
     .from("assets")
     .select("*", { count: "exact" })
