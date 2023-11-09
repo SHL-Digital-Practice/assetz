@@ -4,7 +4,12 @@ export default defineNuxtConfig({
   experimental: {
     viewTransition: true,
   },
-  modules: ["nuxt-graphql-client", "@nuxtjs/supabase", "@nuxtjs/tailwindcss"],
+  modules: [
+    "nuxt-graphql-client",
+    "@nuxtjs/supabase",
+    "@nuxtjs/tailwindcss",
+    "nuxt-icon",
+  ],
   nitro: {
     preset: "netlify",
   },

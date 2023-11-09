@@ -13,7 +13,8 @@
     "@nuxtjs/supabase": "^1.1.0",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "nuxt": "^3.7.3",
-    "nuxt-graphql-client": "^0.2.30"
+    "nuxt-graphql-client": "^0.2.30",
+    "nuxt-icon": "^0.6.5"
   },
   "dependencies": {
     "@speckle/viewer": "^2.15.1",
