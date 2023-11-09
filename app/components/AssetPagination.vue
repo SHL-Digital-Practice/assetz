@@ -9,16 +9,8 @@
         v-if="page > 0"
       />
     </div>
-    <Transition
-      enter-active-class="opacity-0 transition ease-in-out duration-500 transform"
-      enter-class="opacity-0 scale-95"
-      enter-to-class="opacity-100 scale-100"
-      leave-active-class="opacity-100 transition ease-in-out duration-500 transform"
-      leave-class="opacity-100 scale-100"
-      leave-to-class="opacity-0 scale-95"
-    >
-      <slot> </slot>
-    </Transition>
+
+    <slot> </slot>
     <div class="h-full flex flex-col items-center justify-center w-20">
       <Icon
         @click="paginate(1)"
