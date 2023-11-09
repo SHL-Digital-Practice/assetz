@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const db = await serverSupabaseClient<Database>(event);
 
   const query = getQuery(event);
-  const page = query.page ? (query.page as number) : 0;
+  const page = query.page ? Number(query.page) : 0;
 
   const { data, error, count } = await db
     .from("assets")
