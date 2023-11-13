@@ -25,4 +25,7 @@ export default defineNuxtConfig({
   typescript: {
     shim: false,
   },
+  experimental: {
+    viewTransition: true,
+  },
 });

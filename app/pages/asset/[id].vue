@@ -32,25 +32,38 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Viewer, DefaultViewerParams } from "@speckle/viewer";
 const container = ref<HTMLCanvasElement | null>(null);
 
-// const asset = {
-//   id: "1",
-//   name: "Asset Name",
-//   description: "Asset Description",
-//   project_id: "1",
-//   speckle_id: "1",
-// } as { [key: string]: string };
-
 const id = useRoute().params.id;
+let viewer: Viewer | null;
 
 const {
   data: asset,
   pending,
   refresh,
 } = await useFetch("/api/asset", { query: { id } });
-watchEffect(() => {
-  console.log(asset.value);
+
+onMounted(async () => {
+  setTimeout(async () => {
+    if (!container.value) return;
+
+    viewer = new Viewer(container.value, DefaultViewerParams);
+
+    await viewer.init();
+
+    viewer.loadObject(
+      `https://speckle.xyz/streams/${asset.value?.project_id}/objects/${asset.value?.speckle_id}`
+    );
+  }, 300);
 });
 </script>
-<style></style>
+<style scoped>
+h1 {
+  view-transition-name: header;
+}
+
+.active {
+  view-transition-name: graphic;
+}
+</style>

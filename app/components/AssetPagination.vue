@@ -25,7 +25,7 @@
 <script setup lang="ts">
 const emit = defineEmits(["paginate"]);
 
-const page = ref(0);
+const page = usePage();
 
 function paginate(direction: number) {
   page.value += direction;
