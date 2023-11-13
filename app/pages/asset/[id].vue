@@ -18,10 +18,11 @@
           enter-class="opacity-0 scale-95"
           enter-to-class="opacity-100 scale-100"
         >
-          <div class="w-56">
+          <div class="w-56" v-if="asset">
             <template v-for="key in Object.keys(asset)" v-if="!pending">
               <p class="text-white font-bold">
-                {{ key }}: <span class="font-light">{{ asset[key] }}</span>
+                {{ key }}:
+                <span class="font-light">{{ (asset as any)[key] }}</span>
               </p>
             </template>
           </div>
@@ -32,14 +33,24 @@
 </template>
 <script setup lang="ts">
 const container = ref<HTMLCanvasElement | null>(null);
-const pending = ref(false);
 
-const asset = {
-  id: "1",
-  name: "Asset Name",
-  description: "Asset Description",
-  project_id: "1",
-  speckle_id: "1",
-} as { [key: string]: string };
+// const asset = {
+//   id: "1",
+//   name: "Asset Name",
+//   description: "Asset Description",
+//   project_id: "1",
+//   speckle_id: "1",
+// } as { [key: string]: string };
+
+const id = useRoute().params.id;
+
+const {
+  data: asset,
+  pending,
+  refresh,
+} = await useFetch("/api/asset", { query: { id } });
+watchEffect(() => {
+  console.log(asset.value);
+});
 </script>
 <style></style>
