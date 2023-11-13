@@ -8,11 +8,13 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  assets: {
-    id: string;
-    speckle_id?: string; // Object Id
-    project_id?: string; // Stream Id
-  }[];
+  assets:
+    | {
+        id: string;
+        speckle_id: string | null;
+        project_id: string | null;
+      }[]
+    | null;
 }>();
 </script>
 
