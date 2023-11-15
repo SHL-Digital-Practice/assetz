@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  speckle_id?: string; // Object Id
-  project_id?: string; // Stream Id
+  speckle_id?: string | null; // Object Id
+  project_id?: string | null; // Stream Id
 }>();
 
 const thumbnail = computed(() =>
