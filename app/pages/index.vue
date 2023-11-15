@@ -22,16 +22,20 @@
 <script setup lang="ts">
 const active = useState<string>();
 
-const assets = [
-  { id: "1", project_id: "1", speckle_id: "1" },
-  { id: "2", project_id: "2", speckle_id: "2" },
-  { id: "3", project_id: "3", speckle_id: "3" },
-  { id: "4", project_id: "4", speckle_id: "4" },
-  { id: "5", project_id: "5", speckle_id: "5" },
-  { id: "6", project_id: "6", speckle_id: "6" },
-  { id: "7", project_id: "7", speckle_id: "7" },
-  { id: "8", project_id: "8", speckle_id: "8" },
-  { id: "9", project_id: "9", speckle_id: "9" },
-];
+// const assets = [
+//   { id: "1", project_id: "1", speckle_id: "1" },
+//   { id: "2", project_id: "2", speckle_id: "2" },
+//   { id: "3", project_id: "3", speckle_id: "3" },
+//   { id: "4", project_id: "4", speckle_id: "4" },
+//   { id: "5", project_id: "5", speckle_id: "5" },
+//   { id: "6", project_id: "6", speckle_id: "6" },
+//   { id: "7", project_id: "7", speckle_id: "7" },
+//   { id: "8", project_id: "8", speckle_id: "8" },
+//   { id: "9", project_id: "9", speckle_id: "9" },
+// ];
+const { data: assets } = useFetch("/api/assets");
+watchEffect(() => {
+  console.log("assets", assets.value);
+});
 </script>
 <style></style>

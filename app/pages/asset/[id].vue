@@ -32,14 +32,26 @@
 </template>
 <script setup lang="ts">
 const container = ref<HTMLCanvasElement | null>(null);
-const pending = ref(false);
+// const pending = ref(false);
 
-const asset = {
-  id: "1",
-  name: "Asset Name",
-  description: "Asset Description",
-  project_id: "1",
-  speckle_id: "1",
-} as { [key: string]: string };
+// const asset = {
+//   id: "1",
+//   name: "Asset Name",
+//   description: "Asset Description",
+//   project_id: "1",
+//   speckle_id: "1",
+// } as { [key: string]: string };
+
+const id = useRoute().params.id;
+
+const {
+  data: asset,
+  pending,
+  refresh,
+} = useFetch("/api/asset", {
+  query: {
+    id,
+  },
+});
 </script>
 <style></style>
